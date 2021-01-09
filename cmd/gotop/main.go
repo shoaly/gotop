@@ -33,7 +33,8 @@ import (
 
 const (
 	graphHorizontalScaleDelta = 3
-	defaultUI                 = "2:cpu\ndisk/1 2:mem/2\ntemp\n2:net 2:procs"
+	// defaultUI                 = "2:cpu\ndisk/1 2:net/2\ntemp\n1:mem 1:temp 2:procs"
+	defaultUI                 = "cpu\n2:procs 2:net\ndisk/3 temp/2 mem/4"
 	minimalUI                 = "cpu\nmem procs"
 	batteryUI                 = "cpu/2 batt/1\ndisk/1 2:mem/2\ntemp\nnet procs"
 	procsUI                   = "cpu 4:procs\ndisk\nmem\nnet"
@@ -59,7 +60,8 @@ func parseArgs() error {
 		cpaths[i] = p.Path
 	}
 	help := opflag.BoolP("help", "h", false, "Show this screen.")
-	color := opflag.StringP("color", "c", conf.Colorscheme.Name, "Set a colorscheme.")
+	// color := opflag.StringP("color", "c", conf.Colorscheme.Name, "Set a colorscheme.")
+	color := opflag.StringP("color", "c", "monokai", "Set a colorscheme.")
 	opflag.IntVarP(&conf.GraphHorizontalScale, "graphscale", "S", conf.GraphHorizontalScale, "Graph scale factor, >0")
 	version := opflag.BoolP("version", "v", false, "Print version and exit.")
 	versioN := opflag.BoolP("", "V", false, "Print version and exit.")
