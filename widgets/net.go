@@ -140,7 +140,8 @@ func (net *NetWidget) update() {
 	if net.Mbps {
 		rx, tx = "mbps", "mbps"
 	}
-	format := " %s: %9.1f %2s/s"
+	// format := " %s: %9.1f %2s/s"
+	format2 := "%s: %2.1f%2s/s"
 
 	var total, recent uint64
 	var label, unitRecent, rate string
@@ -148,19 +149,24 @@ func (net *NetWidget) update() {
 	// render widget titles
 	for i := 0; i < 2; i++ {
 		if i == 0 {
-			total, label, rate, recent = totalBytesRecv, "RX", rx, recentBytesRecv
+			total, label, rate, recent = totalBytesRecv, " RX", rx, recentBytesRecv
 		} else {
-			total, label, rate, recent = totalBytesSent, "TX", tx, recentBytesSent
+			total, label, rate, recent = totalBytesSent, " TX", tx, recentBytesSent
 		}
 
 		totalConverted, unitTotal := utils.ConvertBytes(total)
 		if net.Mbps {
-			recentConverted, unitRecent, format = float64(recent)*0.000008, "", " %s: %11.3f %2s"
+			recentConverted, unitRecent, format2 = float64(recent)*0.000008, "", " %s: %11.3f %2s"
 		} else {
 			recentConverted, unitRecent = utils.ConvertBytes(recent)
 		}
+		if false{
+			rate = rate + rate
+		}
 
-		net.Lines[i].Title1 = fmt.Sprintf(" Total %s: %5.1f %s", label, totalConverted, unitTotal)
-		net.Lines[i].Title2 = fmt.Sprintf(format, rate, recentConverted, unitRecent)
+		net.Lines[i].Title1 = fmt.Sprintf(format2, rate ,recentConverted, unitRecent)  + " "+  fmt.Sprintf("%s:%2.1f %s", label, totalConverted, unitTotal) 
+		// net.Lines[i].Title2 = fmt.Sprintf(format, rate, recentConverted, unitRecent)
+		net.Lines[i].Title2 = ""
+
 	}
 }
